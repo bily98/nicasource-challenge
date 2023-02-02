@@ -1,0 +1,24 @@
+<!--begin::Navbar-->
+<div class="app-navbar flex-shrink-0">
+    <!--begin::Theme Mode-->
+    <div class="app-navbar-item ms-1 ms-lg-5">
+        <!--begin::Menu- wrapper-->
+        <partial name="~/Views/Partials/ThemeMode/_Main.cshtml" />
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::Theme Mode-->
+    
+    <!--begin::User menu-->
+    <div class="app-navbar-item ms-5" id="kt_header_user_menu_toggle">
+        <!--begin::Menu wrapper-->
+        <div class="cursor-pointer symbol symbol-35px symbol-md-45px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+            <img class="symbol symbol-circle symbol-35px symbol-md-45px" src="assets/media/avatars/300-13.jpg" alt="user"/>
+        </div>
+        <partial name="~/Views/Partials/Menus/_UserAccountMenu.cshtml"/>
+        <!--end::Menu wrapper-->
+    </div>
+    <!--end::User menu-->
+    <!--begin::Header menu toggle-->
+    <!--end::Header menu toggle-->
+</div>
+<!--end::Navbar-->
