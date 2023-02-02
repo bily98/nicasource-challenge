@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Starterkit._keenthemes.libs;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NicasourceChallenge.Web._keenthemes.libs;
 
-namespace Starterkit.Controllers;
+namespace NicasourceChallenge.Web.Controllers;
 
+[Authorize]
 public class DashboardsController : Controller
 {
     private readonly ILogger<DashboardsController> _logger;

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Starterkit._keenthemes.libs;
+using NicasourceChallenge.Web._keenthemes.libs;
 
-namespace Starterkit.Controllers;
+namespace NicasourceChallenge.Web.Controllers;
 
 public class SystemController : Controller
 {

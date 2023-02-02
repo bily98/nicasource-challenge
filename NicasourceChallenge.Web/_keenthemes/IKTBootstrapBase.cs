@@ -1,6 +1,6 @@
-using Starterkit._keenthemes.libs;
+using NicasourceChallenge.Web._keenthemes.libs;
 
-namespace Starterkit._keenthemes;
+namespace NicasourceChallenge.Web._keenthemes;
 
 public interface IKTBootstrapBase
 {

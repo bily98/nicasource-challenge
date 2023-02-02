@@ -1,9 +1,25 @@
-using Starterkit._keenthemes;
-using Starterkit._keenthemes.libs;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using NicasourceChallenge.Web.Configurations.AuthorizationPolicies;
+using NicasourceChallenge.Web._keenthemes;
+using NicasourceChallenge.Web._keenthemes.libs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminScope",
+        policy => policy.Requirements.Add(
+            new ScopesRequirement(
+                "https://bily98.onmicrosoft.com/cycloware/api/admin"))
+    );
+});
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IKTTheme, KTTheme>();
@@ -40,6 +56,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseThemeMiddleware();
 

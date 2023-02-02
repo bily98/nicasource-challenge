@@ -1,4 +1,4 @@
-namespace Starterkit.Models;
+namespace NicasourceChallenge.Web.Models;
 
 public class ErrorViewModel
 {

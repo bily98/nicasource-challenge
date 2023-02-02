@@ -1,3 +1,4 @@
+@using System.Security.Claims
 <!--begin::User account menu-->
 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
 	<!--begin::Menu item-->
@@ -10,9 +11,9 @@
 			<!--end::Avatar-->
 			<!--begin::Username-->
 			<div class="d-flex flex-column">
-				<div class="fw-semibold d-flex align-items-center fs-5">Max Smith 
+				<div class="fw-semibold d-flex align-items-center fs-5">
+					@User.FindFirst(ClaimTypes.GivenName).Value @User.FindFirst(ClaimTypes.Surname).Value
 				<span class="badge badge-light-success fw-semibold fs-8 px-2 py-1 ms-2">Pro</span></div>
-				<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
 			</div>
 			<!--end::Username-->
 		</div>
@@ -23,7 +24,7 @@
 	<!--end::Menu separator-->
 	<!--begin::Menu item-->
 	<div class="menu-item px-5">
-		<a href="/signin" class="menu-link px-5">Sign Out</a>
+		<a class="menu-link px-5" asp-controller="Auth" asp-action="Logout">Sign Out</a>
 	</div>
 	<!--end::Menu item-->
 </div>

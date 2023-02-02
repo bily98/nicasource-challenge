@@ -1,4 +1,4 @@
-namespace Starterkit._keenthemes.libs;
+namespace NicasourceChallenge.Web._keenthemes.libs;
 
 // Core theme interface
 public interface IKTTheme
