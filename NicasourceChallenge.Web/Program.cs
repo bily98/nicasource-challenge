@@ -21,9 +21,9 @@ builder.Services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(cosm
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
 
-builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+builder.Services.AddTransient<IDocumentService, DocumentService>();
 
-builder.Services.AddSingleton<IDocumentService, DocumentService>();
+builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
 
 builder.Services.AddControllersWithViews();
 
@@ -51,7 +51,7 @@ app.Use(async (context, next) =>
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/System/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -67,6 +67,6 @@ app.UseThemeMiddleware();
 
 app.MapControllerRoute(
     "default",
-    "{controller=Dashboards}/{action=Index}/{id?}");
+    "{controller=Cloud}/{action=Index}/{id?}");
 
 app.Run();
