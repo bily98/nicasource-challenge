@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using NicasourceChallenge.Core.Interfaces;
+using NicasourceChallenge.Core.Services;
 using NicasourceChallenge.Infrastructure.Data;
+using NicasourceChallenge.Infrastructure.Repositories;
+using NicasourceChallenge.SharedKernel.Interfaces;
 using NicasourceChallenge.Web._keenthemes;
 using NicasourceChallenge.Web._keenthemes.libs;
 
@@ -16,6 +20,10 @@ builder.Services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(cosm
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
+
+builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+
+builder.Services.AddSingleton<IDocumentService, DocumentService>();
 
 builder.Services.AddControllersWithViews();
 

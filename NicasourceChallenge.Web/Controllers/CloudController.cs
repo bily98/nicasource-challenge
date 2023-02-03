@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NicasourceChallenge.Web._keenthemes.libs;
 
 namespace NicasourceChallenge.App.Controllers;
 
+[Authorize]
 public class CloudController : Controller
 {
     private readonly ILogger<CloudController> _logger;
@@ -14,6 +16,8 @@ public class CloudController : Controller
         _theme = theme;
     }
 
+
+    [HttpGet("/")]
     [HttpGet("/cloud")]
     public IActionResult Index()
     {
