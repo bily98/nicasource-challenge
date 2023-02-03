@@ -5,7 +5,6 @@ namespace NicasourceChallenge.Web.Controllers;
 
 public class SystemController : Controller
 {
-
     private readonly ILogger<DashboardsController> _logger;
     private readonly IKTTheme _theme;
 

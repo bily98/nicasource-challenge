@@ -16,7 +16,7 @@ public interface IKTTheme
     void SetModeSwitch(bool flag);
 
     bool IsModeSwitchEnabled();
-    
+
     void SetModeDefault(string flag);
 
     string GetModeDefault();
@@ -39,7 +39,7 @@ public interface IKTTheme
 
     string[] GetFonts();
 
-    string[] GetGlobalAssets(String type);
+    string[] GetGlobalAssets(string type);
 
     void AddVendors(string[] vendors);
 

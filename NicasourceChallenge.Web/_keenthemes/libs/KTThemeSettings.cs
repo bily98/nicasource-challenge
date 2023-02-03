@@ -1,8 +1,8 @@
 namespace NicasourceChallenge.Web._keenthemes.libs;
 
-class KTThemeSettings
+internal class KTThemeSettings
 {
-    public static KTThemeBase Config { get; set; } = new KTThemeBase();
+    public static KTThemeBase Config { get; set; } = new();
 
     public static void init(IConfiguration configuration)
     {

@@ -1,7 +1,9 @@
 using NicasourceChallenge.Web._keenthemes.libs;
 
 namespace NicasourceChallenge.Web._keenthemes;
-public class KTBootstrapBase: IKTBootstrapBase {
+
+public class KTBootstrapBase : IKTBootstrapBase
+{
     private IKTTheme _theme = new KTTheme();
 
     // Init theme mode option from settings
@@ -10,7 +12,7 @@ public class KTBootstrapBase: IKTBootstrapBase {
         _theme.SetModeSwitch(KTThemeSettings.Config.ModeSwitchEnabled);
         _theme.SetModeDefault(KTThemeSettings.Config.ModeDefault);
     }
- 
+
     // Init theme direction option (RTL or LTR) from settings
     // Init RTL html attributes by checking if RTL is enabled.
     // This function is being called for the html tag
@@ -35,7 +37,7 @@ public class KTBootstrapBase: IKTBootstrapBase {
     public void Init(IKTTheme theme)
     {
         _theme = theme;
-        
+
         InitThemeMode();
         InitThemeDirection();
         InitLayout();

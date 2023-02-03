@@ -1,7 +1,5 @@
-﻿namespace NicasourceChallenge.Infrastructure
-{
-    public class Class1
-    {
+﻿namespace NicasourceChallenge.Infrastructure;
 
-    }
+public class Class1
+{
 }

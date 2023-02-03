@@ -4,38 +4,42 @@
 
 <head>
     <title>@ViewData["Title"]</title>
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="" />
+    <meta charset="utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content=""/>
 
 
-    <link rel="shortcut icon" href="@KTTheme.GetFavicon()" />
+    <link rel="shortcut icon" href="@KTTheme.GetFavicon()"/>
 
     <!--begin::Fonts-->
-    @foreach(string font in KTTheme.GetFonts()){
-        <link rel="stylesheet" href="@font" />
+    @foreach (var font in KTTheme.GetFonts())
+    {
+        <link rel="stylesheet" href="@font"/>
     }
     <!--end::Fonts-->
 
     <!--begin::Vendor Stylesheets(optional)-->
-    @foreach(string file in KTTheme.GetVendors("Css")){
-    <link rel="stylesheet" type="text/css" href="@file" />
+    @foreach (var file in KTTheme.GetVendors("Css"))
+    {
+        <link rel="stylesheet" type="text/css" href="@file"/>
     }
     <!--end::Vendor Stylesheets-->
 
     <!--begin::Global Stylesheets(mandatory)-->
-    @foreach(string file in KTTheme.GetGlobalAssets("Css")){
-    <link rel="stylesheet" type="text/css" href="@file" />
+    @foreach (var file in KTTheme.GetGlobalAssets("Css"))
+    {
+        <link rel="stylesheet" type="text/css" href="@file"/>
     }
     <!--end::Global Stylesheets-->
 
     <!--begin::Custom Stylesheets(optional)-->
-    @foreach(string file in KTTheme.GetCssFiles()){
-        <link rel="stylesheet" type="text/css" href='@KTTheme.GetAssetPath(file)' />
+    @foreach (var file in KTTheme.GetCssFiles())
+    {
+        <link rel="stylesheet" type="text/css" href='@KTTheme.GetAssetPath(file)'/>
     }
     <!--end::Custom Stylesheets-->
 </head>
@@ -50,21 +54,21 @@
     <partial name="~/Views/Partials/_Scrolltop.cshtml"></partial>
 
     <!--begin::Global Javascript(mandatory)-->
-    @foreach (string file in KTTheme.GetGlobalAssets("Js"))
+    @foreach (var file in KTTheme.GetGlobalAssets("Js"))
     {
         <script src="@file"></script>
     }
     <!--end::Global Javascript-->
 
     <!--begin::Vendors Javascript(optional)-->
-    @foreach (string file in KTTheme.GetVendors("Js"))
+    @foreach (var file in KTTheme.GetVendors("Js"))
     {
         <script src="@file"></script>
     }
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(optional)-->
-    @foreach (string file in KTTheme.GetJavascriptFiles())
+    @foreach (var file in KTTheme.GetJavascriptFiles())
     {
         <script src='@KTTheme.GetAssetPath(file)'></script>
     }

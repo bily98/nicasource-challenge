@@ -1,12 +1,12 @@
 namespace NicasourceChallenge.Web._keenthemes.libs;
 
 // Base type class for theme settings
-class KTThemeBase
+internal class KTThemeBase
 {
-    public string Name  { get; set; } = "";
+    public string Name { get; set; } = "";
 
     public string LayoutDir { get; set; } = "";
- 
+
     public string Direction { get; set; } = "";
 
     public bool ModeSwitchEnabled { get; set; } = false;
@@ -15,7 +15,7 @@ class KTThemeBase
 
     public string AssetsDir { get; set; } = "";
 
-    public KTThemeAssets Assets { get; set; } = new KTThemeAssets();
+    public KTThemeAssets Assets { get; set; } = new();
 
-    public SortedDictionary<string, SortedDictionary<string, string[]>> Vendors { get; set; } = new SortedDictionary<string, SortedDictionary<string, string[]>>();
+    public SortedDictionary<string, SortedDictionary<string, string[]>> Vendors { get; set; } = new();
 }

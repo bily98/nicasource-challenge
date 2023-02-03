@@ -1,10 +1,10 @@
 using NicasourceChallenge.Web._keenthemes;
 using NicasourceChallenge.Web._keenthemes.libs;
-    
-public class ThemeMiddleware {
-    private readonly RequestDelegate _next;
 
+public class ThemeMiddleware
+{
     private readonly ILogger<ThemeMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
     public ThemeMiddleware(RequestDelegate next, ILogger<ThemeMiddleware> logger)
     {
