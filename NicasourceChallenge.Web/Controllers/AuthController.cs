@@ -7,7 +7,7 @@ namespace NicasourceChallenge.Web.Controllers;
 
 public class AuthController : Controller
 {
-    public async Task<IActionResult> Logout()
+    public IActionResult Logout()
     {
         return SignOut(
             new AuthenticationProperties(),
