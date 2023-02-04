@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using NicasourceChallenge.Core.Entities;
 using NicasourceChallenge.Core.Interfaces;
 using NicasourceChallenge.Core.Services;
 using NicasourceChallenge.Infrastructure.Data;
@@ -22,6 +23,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
 
 builder.Services.AddTransient<IDocumentService, DocumentService>();
+builder.Services.AddTransient<IAzureStorageRepository<Blob, BlobResponse>, AzureStorageRepository>();
 
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
 
