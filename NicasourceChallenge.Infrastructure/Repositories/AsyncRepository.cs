@@ -18,7 +18,7 @@ public class AsyncRepository<T> : RepositoryBase<T>, IAsyncRepository<T> where T
     public override Task<T> AddAsync(T entity, CancellationToken cancellationToken = new())
     {
         var lastById = _dbContext.Set<T>().OrderByDescending(x => x.Id).FirstOrDefault();
-
+        _dbContext.Set<T>().OrderBy(x => "");
         entity.Id = lastById != null ? lastById.Id + 1 : 1;
         entity.PartitionKey = $"{(lastById != null ? lastById.Id + 1 : 1)}";
 

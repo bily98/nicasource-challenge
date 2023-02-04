@@ -19,11 +19,11 @@ public class DocumentService : IDocumentService
         _azureStorageRepository = azureStorageRepository;
     }
 
-    public async Task<Result<IEnumerable<Document>>> GetDocumentsAsync(string userId)
+    public async Task<Result<IEnumerable<Document>>> GetDocumentsAsync(string userId, string sortColumn, string sortColumnDirection, string searchValue, int skip, int pageSize)
     {
         try
         {
-            var specification = new GetByUserIdSpec(userId);
+            var specification = new GetByUserIdSpec(userId, sortColumn, sortColumnDirection, searchValue, skip, pageSize);
             var documents = await _documentRepository.ListAsync(specification);
 
             return Result<IEnumerable<Document>>.Success(documents);

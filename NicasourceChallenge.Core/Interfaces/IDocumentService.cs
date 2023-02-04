@@ -10,8 +10,13 @@ public interface IDocumentService
     ///     Use this method to get a list of documents metadata.
     /// </summary>
     /// <param name="userId">The user's id</param>
+    /// <param name="sortColumn">The sort column</param>
+    /// <param name="sortColumnDirection">The sort column direction</param>
+    /// <param name="searchValue">The value to search</param>
+    /// <param name="skip">The number of documents to skip</param>
+    /// <param name="pageSize">The number of documents to take</param>
     /// <returns>List of documents</returns>
-    Task<Result<IEnumerable<Document>>> GetDocumentsAsync(string userId);
+    Task<Result<IEnumerable<Document>>> GetDocumentsAsync(string userId, string sortColumn, string sortColumnDirection, string searchValue, int skip, int pageSize);
 
     /// <summary>
     ///     Use this method to save a document
