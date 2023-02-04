@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace NicasourceChallenge.SharedKernel.Entities;
+﻿namespace NicasourceChallenge.SharedKernel.Entities;
 
 public class BaseEntity
 {

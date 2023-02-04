@@ -13,5 +13,5 @@ public class AuthController : Controller
             new AuthenticationProperties(),
             CookieAuthenticationDefaults.AuthenticationScheme,
             OpenIdConnectDefaults.AuthenticationScheme);
-    }   
+    }
 }
