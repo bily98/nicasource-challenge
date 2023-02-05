@@ -36,7 +36,7 @@ builder.Services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(cosm
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
 
-builder.Services.AddTransient<IDocumentService, DocumentService>();
+builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IAzureStorageRepository<Blob, BlobResponse>, AzureStorageRepository>();
 
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));

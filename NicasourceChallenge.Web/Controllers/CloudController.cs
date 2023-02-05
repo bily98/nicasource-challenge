@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
-using NicasourceChallenge.Core.Interfaces;
-using NicasourceChallenge.Core.Specifications.Documents;
 using NicasourceChallenge.SharedKernel.Interfaces;
 using NicasourceChallenge.Web._keenthemes.libs;
 using System.Security.Claims;
 using NicasourceChallenge.Core.Entities;
+using NicasourceChallenge.Core.Specifications.Files;
 
 namespace NicasourceChallenge.App.Controllers;
 

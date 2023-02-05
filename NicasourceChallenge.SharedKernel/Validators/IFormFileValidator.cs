@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace NicasourceChallenge.SharedKernel.Validators;
 
-public class FileValidator : AbstractValidator<IFormFile?>
+public class IFormFileValidator : AbstractValidator<IFormFile?>
 {
-    public FileValidator()
+    public IFormFileValidator()
     {
         RuleFor(x => x.Length).NotNull();
     }

@@ -14,7 +14,7 @@ public class BlobDtoValidator : AbstractValidator<BlobDto>
 {
     public BlobDtoValidator()
     {
-        RuleFor(x => x.File).SetValidator(new FileValidator());
+        RuleFor(x => x.File).SetValidator(new IFormFileValidator());
         RuleFor(x => x.Description).NotNull().NotEmpty();
     }
 }

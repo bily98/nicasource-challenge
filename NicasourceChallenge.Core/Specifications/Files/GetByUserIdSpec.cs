@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using NicasourceChallenge.Core.Entities;
 
-namespace NicasourceChallenge.Core.Specifications.Documents;
+namespace NicasourceChallenge.Core.Specifications.Files;
 
 public class GetByUserIdSpec : Specification<File>, ISingleResultSpecification
 {

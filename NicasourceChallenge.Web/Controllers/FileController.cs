@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NicasourceChallenge.Core.Dtos;
 using NicasourceChallenge.Core.Entities;
 using NicasourceChallenge.Core.Interfaces;
-using NicasourceChallenge.Core.Specifications.Documents;
+using NicasourceChallenge.Core.Specifications.Files;
 using NicasourceChallenge.SharedKernel.Interfaces;
 using NicasourceChallenge.Web._keenthemes.libs;
 
@@ -19,11 +19,11 @@ public class FileController : ControllerBase
     private readonly ILogger<FileController> _logger;
     private readonly IKTTheme _theme;
     private readonly IAsyncRepository<File> _fileRepository;
-    private readonly IDocumentService _fileService;
+    private readonly IFileService _fileService;
     private readonly IMapper _mapper;
 
     public FileController(ILogger<FileController> logger, IKTTheme theme,
-        IDocumentService fileService, IAsyncRepository<File> fileRepository,
+        IFileService fileService, IAsyncRepository<File> fileRepository,
         IMapper mapper)
     {
         _logger = logger;
@@ -31,6 +31,19 @@ public class FileController : ControllerBase
         _fileService = fileService;
         _fileRepository = fileRepository;
         _mapper = mapper;
+    }
+
+    [HttpGet("/api/file/{id}")]
+    public async Task<IActionResult> Download(int id)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        var result = await _fileService.DownloadFile(userId, id);
+
+        if (!result.IsSuccess)
+            return Problem(statusCode: 500);
+
+        return File(result.Value.Content!, result.Value.ContentType!, result.Value.Name);
     }
 
     [HttpPost("/api/file/list")]
@@ -48,7 +61,7 @@ public class FileController : ControllerBase
         var skip = start != null ? Convert.ToInt32(start) : 0;
 
         var result =
-            await _fileService.GetDocumentsAsync(userId, sortColumn, sortColumnDirection, searchValue, skip,
+            await _fileService.GetFilesAsync(userId, sortColumn, sortColumnDirection, searchValue, skip,
                 pageSize);
 
         if (!result.IsSuccess) 
@@ -70,7 +83,7 @@ public class FileController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _fileService.SaveDocument(User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
+        var result = await _fileService.SaveFile(User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
             blobDto.Description!, blobDto.File!);
 
         if (!result.IsSuccess)
@@ -83,7 +96,7 @@ public class FileController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        var result = await _fileService.DeleteDocument(userId, id);
+        var result = await _fileService.DeleteFile(userId, id);
 
         if (result.IsSuccess)
             return Ok();

@@ -13,9 +13,9 @@ public class File : BaseEntity
     public string? Format { get; set; }
 }
 
-public class DocumentValidator : AbstractValidator<File>
+public class FileValidator : AbstractValidator<File>
 {
-    public DocumentValidator()
+    public FileValidator()
     {
         RuleFor(x => x.UserId).NotEmpty();
         RuleFor(x => x.Name).NotNull().NotEmpty();
