@@ -9,15 +9,15 @@ public class CosmosDbContext : DbContext
     {
     }
 
-    public DbSet<Document> Documents { get; set; }
+    public DbSet<File> Files { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Document>(e =>
+        modelBuilder.Entity<File>(e =>
         {
-            e.ToContainer("Document");
+            e.ToContainer("File");
             e.Property(p => p.Id);
-            e.HasPartitionKey(p => p.PartitionKey);
+            e.HasPartitionKey<File, string>(p => p.PartitionKey);
         });
     }
 }

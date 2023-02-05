@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace NicasourceChallenge.Web._keenthemes.libs;
 
 // Core theme class
@@ -126,6 +128,11 @@ public class KTTheme : IKTTheme
     public string GetView(string path)
     {
         return $"{KTThemeSettings.Config.LayoutDir}/{path}";
+    }
+
+    public string GetView(string folder, string file)
+    {
+        return $"~/Views/{folder}/{file}";
     }
 
     public string GetPageView(string folder, string file)

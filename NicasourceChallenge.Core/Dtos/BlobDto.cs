@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using NicasourceChallenge.SharedKernel.Validators;
 
-namespace NicasourceChallenge.Core.Dtos
+namespace NicasourceChallenge.Core.Dtos;
+
+public class BlobDto
 {
-    public class BlobDto
+    public IFormFile? File { get; set; }
+    public string? Description { get; set; }
+}
+
+public class BlobDtoValidator : AbstractValidator<BlobDto>
+{
+    public BlobDtoValidator()
     {
-        public IFormFile? File { get; set; }
-        public string? Description { get; set; }
+        RuleFor(x => x.File).SetValidator(new FileValidator());
+        RuleFor(x => x.Description).NotNull().NotEmpty();
     }
 }

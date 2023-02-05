@@ -31,6 +31,8 @@ public interface IKTTheme
 
     string GetView(string path);
 
+    string GetView(string folder, string file);
+
     string GetPageView(string folder, string file);
 
     string ExtendCssFilename(string path);

@@ -1,9 +1,12 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NicasourceChallenge.Core.Dtos;
+using Microsoft.Azure.Cosmos;
 using NicasourceChallenge.Core.Interfaces;
+using NicasourceChallenge.Core.Specifications.Documents;
+using NicasourceChallenge.SharedKernel.Interfaces;
 using NicasourceChallenge.Web._keenthemes.libs;
+using System.Security.Claims;
+using NicasourceChallenge.Core.Entities;
 
 namespace NicasourceChallenge.App.Controllers;
 
@@ -12,14 +15,14 @@ public class CloudController : Controller
 {
     private readonly ILogger<CloudController> _logger;
     private readonly IKTTheme _theme;
-    private readonly IDocumentService _documentService;
+    private readonly IAsyncRepository<File> _fileRepository;
 
     public CloudController(ILogger<CloudController> logger, IKTTheme theme,
-        IDocumentService documentService)
+        IAsyncRepository<File> fileRepository)
     {
         _logger = logger;
         _theme = theme;
-        _documentService = documentService;
+        _fileRepository = fileRepository;
     }
 
 
@@ -27,14 +30,10 @@ public class CloudController : Controller
     [HttpGet("/cloud")]
     public async Task<IActionResult> Index()
     {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var specification = new GetByUserIdSpec(userId);
+        ViewBag.TotalFiles = await _fileRepository.CountAsync(specification);
+
         return View(_theme.GetPageView("Cloud", "Index.cshtml"));
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Upload(BlobDto blobDto)
-    {
-        var result = await _documentService.SaveDocument(User.FindFirst(ClaimTypes.NameIdentifier)!.Value, blobDto.Description!, blobDto.File!);
-
-        return RedirectToAction("Index", "Cloud");
     }
 }

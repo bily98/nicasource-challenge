@@ -1,4 +1,6 @@
-﻿namespace NicasourceChallenge.Core.Entities;
+﻿using System.IO;
+
+namespace NicasourceChallenge.Core.Entities;
 
 public class Blob
 {

@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using NicasourceChallenge.Infrastructure.Data;
 using NicasourceChallenge.SharedKernel.Entities;
 using NicasourceChallenge.SharedKernel.Interfaces;

@@ -3,7 +3,7 @@ using NicasourceChallenge.SharedKernel.Entities;
 
 namespace NicasourceChallenge.Core.Entities;
 
-public class Document : BaseEntity
+public class File : BaseEntity
 {
     public Guid UserId { get; set; }
     public string? Name { get; set; }
@@ -13,7 +13,7 @@ public class Document : BaseEntity
     public string? Format { get; set; }
 }
 
-public class DocumentValidator : AbstractValidator<Document>
+public class DocumentValidator : AbstractValidator<File>
 {
     public DocumentValidator()
     {

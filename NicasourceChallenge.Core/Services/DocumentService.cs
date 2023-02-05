@@ -1,4 +1,5 @@
-﻿using Ardalis.Result;
+﻿using System.IO;
+using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using Microsoft.AspNetCore.Http;
 using NicasourceChallenge.Core.Entities;
@@ -10,31 +11,34 @@ namespace NicasourceChallenge.Core.Services;
 
 public class DocumentService : IDocumentService
 {
-    private readonly IAsyncRepository<Document> _documentRepository;
     private readonly IAzureStorageRepository<Blob, BlobResponse> _azureStorageRepository;
+    private readonly IAsyncRepository<Entities.File> _fileRepository;
 
-    public DocumentService(IAsyncRepository<Document> documentRepository, IAzureStorageRepository<Blob, BlobResponse> azureStorageRepository)
+    public DocumentService(IAsyncRepository<Entities.File> fileRepository,
+        IAzureStorageRepository<Blob, BlobResponse> azureStorageRepository)
     {
-        _documentRepository = documentRepository;
+        _fileRepository = fileRepository;
         _azureStorageRepository = azureStorageRepository;
     }
 
-    public async Task<Result<IEnumerable<Document>>> GetDocumentsAsync(string userId, string sortColumn, string sortColumnDirection, string searchValue, int skip, int pageSize)
+    public async Task<Result<IEnumerable<Entities.File>>> GetDocumentsAsync(string userId, string sortColumn,
+        string sortColumnDirection, string searchValue, int skip, int pageSize)
     {
         try
         {
-            var specification = new GetByUserIdSpec(userId, sortColumn, sortColumnDirection, searchValue, skip, pageSize);
-            var documents = await _documentRepository.ListAsync(specification);
+            var specification =
+                new GetByUserIdSpec(userId, sortColumn, sortColumnDirection, searchValue, skip, pageSize);
+            var files = await _fileRepository.ListAsync(specification);
 
-            return Result<IEnumerable<Document>>.Success(documents);
+            return Result<IEnumerable<Entities.File>>.Success(files);
         }
         catch (Exception ex)
         {
-            return Result<IEnumerable<Document>>.Error(ex.Message);
+            return Result<IEnumerable<Entities.File>>.Error(ex.Message);
         }
     }
 
-    public async Task<Result<Document>> SaveDocument(string userId, string description, IFormFile file)
+    public async Task<Result<Entities.File>> SaveDocument(string userId, string description, IFormFile file)
     {
         try
         {
@@ -42,7 +46,7 @@ public class DocumentService : IDocumentService
 
             var blobResponse = await _azureStorageRepository.UploadAsync(file);
 
-            var document = new Document
+            var file = new Entities.File
             {
                 Name = blobResponse.Blob.Name,
                 Description = description,
@@ -54,20 +58,42 @@ public class DocumentService : IDocumentService
             };
 
             if (blobResponse.Error)
-                return Result<Document>.Error(blobResponse.Status);
+                return Result<Entities.File>.Error(blobResponse.Status);
 
-            var validationResult = await validator.ValidateAsync(document);
+            var validationResult = await validator.ValidateAsync(file);
 
             if (!validationResult.IsValid)
-                return Result<Document>.Invalid(validationResult.AsErrors());
+                return Result<Entities.File>.Invalid(validationResult.AsErrors());
 
-            document = await _documentRepository.AddAsync(document);
+            file = await _fileRepository.AddAsync(file);
 
-            return Result<Document>.Success(document);
+            return Result<Entities.File>.Success(file);
         }
         catch (Exception ex)
         {
-            return Result<Document>.Error(ex.Message);
+            return Result<Entities.File>.Error(ex.Message);
+        }
+    }
+
+    public async Task<Result> DeleteDocument(string userId, int fileId)
+    {
+        try
+        {
+            var specification = new GetByUserIdAndDocumentIdSpec(userId, fileId);
+            var file = await _fileRepository.FirstOrDefaultAsync(specification);
+
+            if (file == null)
+                return Result.Error($"Document with id {fileId} does not exist");
+
+            await _fileRepository.DeleteAsync(file!);
+
+            var response = await _azureStorageRepository.DeleteAsync(file!.Name!);
+
+            return !response.Error ? Result.Success() : Result.Error(response.Status);
+        }
+        catch (Exception ex)
+        {
+            return Result.Error(ex.Message);
         }
     }
 }

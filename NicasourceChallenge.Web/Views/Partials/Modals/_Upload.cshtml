@@ -1,0 +1,38 @@
+﻿@model NicasourceChallenge.Core.Dtos.BlobDto
+@{
+}
+<div class="modal-header">
+    <h3 class="modal-title">Add a file</h3>
+
+    <!--begin::Close-->
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+        <span class="svg-icon svg-icon-1"></span>
+    </div>
+    <!--end::Close-->
+</div>
+
+<form asp-controller="Document" asp-action="Post" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="form-floating mb-7">
+                    <input asp-for="File" class="form-control form-control-solid" id="select-file" required/>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+
+                <div class="form-floating">
+                    <textarea asp-for="Description" class="form-control form-control-solid" placeholder="Leave a description here" id="file-description" style="height: 100px" required></textarea>
+                    <label for="file-description">Description</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+</form>
