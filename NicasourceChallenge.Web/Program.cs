@@ -1,6 +1,9 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using NicasourceChallenge.Core.Dtos;
 using NicasourceChallenge.Core.Entities;
 using NicasourceChallenge.Core.Interfaces;
 using NicasourceChallenge.Core.Services;
@@ -11,6 +14,17 @@ using NicasourceChallenge.Web._keenthemes;
 using NicasourceChallenge.Web._keenthemes.libs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#if RELEASE
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    var appUri = builder.Configuration["AppUri"];
+
+    var credential = new ManagedIdentityCredential();
+    options.Connect(new Uri(appUri!), credential);
+});
+
+#endif
 
 // Add services to the container.
 
@@ -26,6 +40,11 @@ builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<IAzureStorageRepository<Blob, BlobResponse>, AzureStorageRepository>();
 
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+
+builder.Services.AddScoped<IValidator<BlobDto>, BlobDtoValidator>();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews();
 
@@ -53,7 +72,7 @@ app.Use(async (context, next) =>
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/System/Error");
+    app.UseExceptionHandler("/error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
